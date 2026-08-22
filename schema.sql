@@ -38,4 +38,4 @@ CREATE TABLE matches (
 );
 
 CREATE INDEX idx_images_status ON images (status);
-CREATE INDEX idx_matches_postID ON matches (postID);
+CREATE INDEX idx_matches_postID ON matches (postID);    
