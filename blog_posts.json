@@ -1,0 +1,77 @@
+[
+  {
+    "title": "The Secret Life of Red Foxes at Dusk",
+    "content": "As the sun dips below the horizon, red foxes emerge from their dens to begin the night's hunt. Known for their keen hearing, foxes can detect the faint rustle of a rodent moving beneath a foot of snow. Their bushy tails, often tipped in white, serve as both balance aids during high leaps and warm wraps against the cold. Solitary by nature, a fox will patrol a territory spanning several kilometers, marking its boundaries as it goes.",
+    "expected_category": "fox"
+  },
+  {
+    "title": "Urban Foxes: Wildlife in the Concrete Jungle",
+    "content": "Once confined to forests and open countryside, red foxes have become a familiar sight in cities around the world. They den under garden sheds, forage through compost bins, and have adapted their hunting schedules to avoid daytime foot traffic. Despite their proximity to humans, urban foxes remain wary, darting away at the first sign of movement. Researchers say this adaptability may be why the species has thrived even as natural habitats shrink.",
+    "expected_category": "fox"
+  },
+  {
+    "title": "Fox Folklore Across Cultures",
+    "content": "From the trickster kitsune of Japanese mythology to Aesop's cunning fables, foxes have long captured the human imagination as symbols of cleverness and mischief. Their sharp features and intelligent eyes lend themselves easily to stories of characters who outwit larger, stronger animals. Even today, the fox remains a popular figure in children's books and animated films, its reputation for slyness rarely far from the surface.",
+    "expected_category": "fox"
+  },
+  {
+    "title": "Understanding Wolf Pack Dynamics",
+    "content": "A wolf pack is far more than a random grouping of animals; it functions as a tightly coordinated family unit, usually built around a breeding pair and their offspring. Roles within the pack shift with age and experience, and cooperative hunting allows wolves to bring down prey many times their individual size. Communication happens through a mix of body language, scent marking, and of course, the long, haunting howl that carries for miles across open terrain.",
+    "expected_category": "wolf"
+  },
+  {
+    "title": "Why Wolves Howl",
+    "content": "The howl of a wolf is one of the most recognizable sounds in nature, but its purpose is often misunderstood. Rather than simply signaling aggression, howling helps pack members locate one another across vast distances, reinforces social bonds, and warns rival packs to stay clear of established territory. Each wolf's howl carries a slightly different pitch, allowing individuals within a pack to recognize each other purely by sound.",
+    "expected_category": "wolf"
+  },
+  {
+    "title": "Wolf Conservation and the Return to the Wild",
+    "content": "After decades of population decline due to hunting and habitat loss, gray wolves have seen a slow but meaningful recovery in parts of North America and Europe. Reintroduction programs, most famously in Yellowstone National Park, have demonstrated how the return of an apex predator can reshape an entire ecosystem, from vegetation patterns to river courses. Conservationists continue to monitor pack movements closely as wolves reclaim territory once thought lost to them permanently.",
+    "expected_category": "wolf"
+  },
+  {
+    "title": "Why Dogs Became Man's Best Friend",
+    "content": "Domesticated from wild ancestors tens of thousands of years ago, dogs have evolved alongside humans in a partnership unlike any other in the animal kingdom. Selective breeding over generations produced animals attuned to human emotion, capable of reading facial expressions and vocal tone with remarkable accuracy. Today, dogs serve roles far beyond companionship, working as guides, protectors, and detectors of everything from illness to explosives.",
+    "expected_category": "dog"
+  },
+  {
+    "title": "The Working Breeds: Loyalty and Discipline",
+    "content": "Some dog breeds were shaped specifically for demanding physical and mental work, herding livestock, guarding property, or assisting law enforcement. These working dogs typically display high energy, sharp intelligence, and an eagerness to follow structured commands. Owners of working breeds often note that without a clear job or consistent training, the same traits that make these dogs excellent partners can also make them restless or difficult to manage.",
+    "expected_category": "dog"
+  },
+  {
+    "title": "A Beginner's Guide to Positive Reinforcement Training",
+    "content": "Training a dog effectively starts with understanding how the animal learns. Positive reinforcement, rewarding desired behavior immediately with treats, praise, or play, tends to produce faster and more reliable results than punishment-based methods. Consistency matters just as much as the reward itself; a command given one way today and differently tomorrow only confuses the dog. Patience, short sessions, and a calm tone go a long way toward building a well-behaved companion.",
+    "expected_category": "dog"
+  },
+  {
+    "title": "The Hibernation Habits of Brown Bears",
+    "content": "As autumn temperatures drop, brown bears enter a period of intense feeding known as hyperphagia, consuming tens of thousands of calories a day to build the fat reserves needed for winter. Once denned, their heart rate and metabolism slow dramatically, allowing them to survive months without eating, drinking, or eliminating waste. Female bears often give birth during this dormant period, waking briefly to nurse cubs before returning to their deep winter rest.",
+    "expected_category": "bear"
+  },
+  {
+    "title": "Brown Bears and the Salmon Run",
+    "content": "Each summer, coastal brown bears gather at rushing rivers to take advantage of one of nature's great spectacles: the salmon run. Standing in the shallows, a skilled bear can catch and consume dozens of fish in a single day, building critical fat reserves ahead of winter. Younger or less experienced bears often watch from the riverbank, learning fishing techniques by observing more established members of the population.",
+    "expected_category": "bear"
+  },
+  {
+    "title": "Living Safely in Bear Country",
+    "content": "For hikers and campers venturing into brown bear territory, understanding basic safety practices can make the difference between a peaceful encounter and a dangerous one. Storing food in bear-proof containers, making noise while walking through dense brush, and maintaining a safe distance if a bear is spotted are all essential habits. Wildlife experts stress that most bears prefer to avoid humans entirely, and encounters typically end without incident when people respond calmly.",
+    "expected_category": "bear"
+  },
+  {
+    "title": "Deer Grazing Patterns Through the Seasons",
+    "content": "Deer adjust their feeding habits significantly as the seasons change, shifting from tender spring shoots and summer foliage to acorns, bark, and woody browse in the leaner months of fall and winter. Most active during dawn and dusk, deer rely on this low-light grazing schedule to avoid predators while still meeting their nutritional needs. A single deer may cover several miles a day in search of food during particularly harsh winters.",
+    "expected_category": "deer"
+  },
+  {
+    "title": "The Autumn Rut: Deer Mating Season",
+    "content": "Every autumn, the behavior of deer populations shifts dramatically as the annual rut begins. Males become far more active and vocal, competing for access to females through displays of size and, when necessary, direct physical contests. This heightened activity also makes deer more visible and less cautious than usual, a fact that wildlife photographers and drivers alike are advised to keep in mind during the season.",
+    "expected_category": "deer"
+  },
+  {
+    "title": "Fawns: The First Weeks of Life",
+    "content": "Born with almost no scent and a coat of camouflaging white spots, a newborn fawn's best defense against predators is simply staying still and hidden in tall grass. Mothers leave their fawns alone for long stretches, returning only briefly to nurse, a strategy that reduces the chance of a predator tracking scent back to the hiding spot. Within just a few weeks, fawns are strong enough to begin following their mothers on short foraging trips.",
+    "expected_category": "deer"
+  }
+]
