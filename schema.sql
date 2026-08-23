@@ -1,15 +1,14 @@
--- pgvector needs to be enabled once, before any table uses the VECTOR type
 CREATE EXTENSION IF NOT EXISTS vector;
 
 CREATE TABLE images (
     imageID SERIAL PRIMARY KEY,
     filePath VARCHAR(255) NOT NULL,
-    subject VARCHAR(255) NOT NULL,
-    category VARCHAR(255) NOT NULL,
-    attributes TEXT[] NOT NULL,
-    caption VARCHAR(255) NOT NULL,
-    confidence DECIMAL(5, 2) NOT NULL,
-    embedding VECTOR(768) NOT NULL,
+    subject VARCHAR(255),
+    category VARCHAR(255),
+    attributes TEXT[],
+    caption VARCHAR(255),
+    confidence DECIMAL(5, 2),
+    embedding VECTOR(768),
     status VARCHAR(100) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -17,9 +16,9 @@ CREATE TABLE images (
 CREATE TABLE posts (
     postID SERIAL PRIMARY KEY,
     postContent TEXT NOT NULL,
-    expectedSubject VARCHAR(255) NOT NULL,
-    expectedCategory VARCHAR(255) NOT NULL,
-    embedding VECTOR(768) NOT NULL,
+    expectedSubject VARCHAR(255),
+    expectedCategory VARCHAR(255),
+    embedding VECTOR(768),
     status VARCHAR(100) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -38,4 +37,4 @@ CREATE TABLE matches (
 );
 
 CREATE INDEX idx_images_status ON images (status);
-CREATE INDEX idx_matches_postID ON matches (postID);    
+CREATE INDEX idx_matches_postID ON matches (postID);

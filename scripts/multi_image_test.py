@@ -1,19 +1,22 @@
-from pathlib import Path
 from src.vision import tag_one_image
+import os
 from src.schemas import CATEGORIES
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-IMAGES_ROOT = PROJECT_ROOT / "images"
+folders = CATEGORIES
 
+basePath = os.path.join(os.path.dirname(__file__), "..", "images")
+
+allImages = []
 count = 0
 
-for category in CATEGORIES:
-    category_folder = IMAGES_ROOT / category
-    for image_path in sorted(category_folder.glob("*.jpg")):
-        count += 1
-        print()
-        print(image_path.name)
-        print(f"Images processed: {count}")
-        result = tag_one_image(str(image_path))
-        print(result)
-        print()
+for i in folders:
+    endpath = basePath + "\\" + i
+    for image in os.listdir(endpath):
+        if image.endswith(".jpg"):
+            print()
+            print(image)
+            print(f"Images processed: {count}")
+            result = tag_one_image(endpath + "\\" + image)
+            count += 1
+            print(result)
+            print()
