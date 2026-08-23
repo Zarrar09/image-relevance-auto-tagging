@@ -38,3 +38,14 @@ CREATE TABLE matches (
 
 CREATE INDEX idx_images_status ON images (status);
 CREATE INDEX idx_matches_postID ON matches (postID);
+
+CREATE TABLE api_calls (
+    callID SERIAL PRIMARY KEY,
+    imageID INT REFERENCES Images(imageID),
+    postID INT REFERENCES Posts(postID),
+    purpose VARCHAR(100) NOT NULL,
+    inputTokens INT NOT NULL,
+    outputTokens INT NOT NULL,
+    totalTokens INT NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -33,7 +33,7 @@ Respond with:
 - confidence: your confidence score, following the rubric above exactly
 """
 
-def tag_one_image(image_path: str) -> ImageResult:
+def tag_one_image(image_path: str) -> tuple[ImageResult, dict]:
     image_bytes = Path(image_path).read_bytes()
     image_b64 = base64.b64encode(image_bytes).decode("utf-8")
 
@@ -50,4 +50,11 @@ def tag_one_image(image_path: str) -> ImageResult:
         },
     )
 
-    return ImageResult.model_validate_json(interaction.output_text)
+    usage = {
+        "input_tokens": interaction.usage.total_input_tokens,
+        "output_tokens": interaction.usage.total_output_tokens,
+        "total_tokens": interaction.usage.total_tokens,
+    }
+
+    result = ImageResult.model_validate_json(interaction.output_text)
+    return result, usage

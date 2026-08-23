@@ -18,7 +18,7 @@ class ImageResult(BaseModel):
     confidence: float = Field(ge=0, le=1)
 
 class Image(ImageResult):
-    status: Literal["pending", "processing", "done", "failed"]
+    status: Literal["pending", "processing", "done", "failed", "flagged"]
     embedding: list[float] | None = None
 
 class Post(BaseModel):
