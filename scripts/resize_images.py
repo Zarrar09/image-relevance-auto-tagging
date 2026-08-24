@@ -13,7 +13,7 @@ Expects a folder structure like:
     images/bear/*.jpg
     images/deer/*.jpg
 
-Overwrites the images in place. Run this ONCE before committing.
+Overwrites the images in place.
 """
 
 import os
