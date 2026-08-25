@@ -1,7 +1,36 @@
-TEST RUN 1:
+TEST RUN 1 - original prompt, caption only
+
+Change: none, this is the baseline before any prompt changes
+
+python -m scripts.run_guard
+
+post 1: accepted -> fox image, distance 0.275
+post 2: accepted -> fox image, distance 0.296
+post 3: accepted -> fox image, distance 0.367
+post 4: accepted -> wolf image, distance 0.372
+post 5: accepted -> wolf image, distance 0.360
+post 6: accepted -> wolf image, distance 0.322
+post 7: rejected -> low confidence, image tag confidence 0.65 below threshold 0.75
+post 8: accepted -> dog image, distance 0.370
+post 9: rejected -> low confidence, image tag confidence 0.65 below threshold 0.75
+post 10: accepted -> bear image, distance 0.347
+post 11: accepted -> bear image, distance 0.293
+post 12: accepted -> bear image, distance 0.304
+post 13: accepted -> deer image, distance 0.339
+post 14: accepted -> deer image, distance 0.360
+post 15: accepted -> deer image, distance 0.325
+
+python -m scripts.forced_wolf
+
+fox post ID: 1
+forced wolf image ID: 12
+wolf distance to fox post: 0.391 (threshold 0.45)
+RESULT: rejected
+EXPLANATION: category mismatch, expected fox but detected wolf
+
+python -m scripts.run_eval
 
 post | expected image | guard top pick | distance | decision | correct?
-------------------------------------------------------------------------------
    1 |              1 |              7 |    0.275 | accepted | NO
    2 |              6 |              6 |    0.296 | accepted | yes
    3 |              7 |              6 |    0.367 | accepted | NO
@@ -21,10 +50,304 @@ post | expected image | guard top pick | distance | decision | correct?
 Posts evaluated: 15
 Top-1 correct: 4
 TOP-1 PRECISION: 26.67%
-
-Of the 13 matches the guard accepted, 4 were correct.
+Of 13 accepted matches, 4 correct
 PRECISION ON ACCEPTED MATCHES: 30.77%
+Category-level precision (correct animal type, ignoring exact photo): 15/15 = 100%
+
+Image confidence table
+
+imageID | category | confidence | status
+1       | fox      | 1.00       | done
+2       | fox      | 1.00       | done
+3       | fox      | 0.95       | done
+4       | fox      | 1.00       | done
+5       | fox      | 0.95       | done
+6       | fox      | 1.00       | done
+7       | fox      | 1.00       | done
+8       | fox      | 1.00       | done
+9       | fox      | 0.95       | done
+10      | fox      | 0.95       | done
+11      | wolf     | 0.85       | done
+12      | wolf     | 0.95       | done
+13      | dog      | 0.65       | flagged
+14      | wolf     | 0.95       | done
+15      | wolf     | 0.95       | done
+16      | wolf     | 0.95       | done
+17      | wolf     | 0.95       | done
+18      | wolf     | 0.95       | done
+19      | wolf     | 1.00       | done
+20      | wolf     | 0.95       | done
+21      | bear     | 1.00       | done
+22      | bear     | 1.00       | done
+23      | bear     | 1.00       | done
+24      | bear     | 0.95       | done
+25      | bear     | 1.00       | done
+26      | bear     | 0.95       | done
+27      | bear     | 1.00       | done
+28      | bear     | 1.00       | done
+29      | bear     | 1.00       | done
+30      | bear     | 0.95       | done
+31      | deer     | 1.00       | done
+32      | deer     | 1.00       | done
+33      | deer     | 0.85       | done
+34      | deer     | 1.00       | done
+35      | deer     | 0.95       | done
+36      | deer     | 0.95       | done
+37      | deer     | 0.85       | done
+38      | deer     | 0.95       | done
+39      | deer     | 0.95       | done
+40      | deer     | 1.00       | done
+41      | dog      | 1.00       | done
+42      | dog      | 1.00       | done
+43      | dog      | 1.00       | done
+44      | dog      | 1.00       | done
+45      | dog      | 1.00       | done
+46      | dog      | 1.00       | done
+47      | dog      | 1.00       | done
+48      | dog      | 1.00       | done
+49      | dog      | 1.00       | done
+50      | dog      | 1.00       | done
+
+Finding: captions were short and generic, many photos in the same
+category had near identical caption wording.
+
 
 ------------------------------------------------------------------
-TEST RUN 2:
+TEST RUN 2 - revised prompt, caption only
 
+Change: vision prompt updated to ask for per-photo unique detail
+in the caption. All 50 images re-tagged and re-embedded on caption
+text only.
+
+python -m scripts.run_guard
+
+post 1: accepted -> fox image, distance 0.239
+post 2: accepted -> fox image, distance 0.301
+post 3: accepted -> fox image, distance 0.361
+post 4: accepted -> wolf image, distance 0.362
+post 5: accepted -> wolf image, distance 0.363
+post 6: accepted -> wolf image, distance 0.311
+post 7: accepted -> dog image, distance 0.401
+post 8: accepted -> dog image, distance 0.378
+post 9: rejected -> no confident match, distance 0.452 above threshold 0.45
+post 10: accepted -> bear image, distance 0.341
+post 11: accepted -> bear image, distance 0.297
+post 12: accepted -> bear image, distance 0.317
+post 13: accepted -> deer image, distance 0.329
+post 14: accepted -> deer image, distance 0.311
+post 15: accepted -> deer image, distance 0.314
+
+python -m scripts.forced_wolf
+
+fox post ID: 1
+forced wolf image ID: 19
+wolf distance to fox post: 0.359 (threshold 0.45)
+RESULT: rejected
+EXPLANATION: category mismatch, expected fox but detected wolf
+
+python -m scripts.run_eval
+
+post | expected image | guard top pick | distance | decision | correct?
+   1 |              1 |              8 |    0.239 | accepted | NO
+   2 |              6 |             10 |    0.301 | accepted | NO
+   3 |              7 |              5 |    0.361 | accepted | NO
+   4 |             20 |             12 |    0.362 | accepted | NO
+   5 |             15 |             18 |    0.363 | accepted | NO
+   6 |             19 |             20 |    0.311 | accepted | NO
+   7 |             48 |             50 |    0.401 | accepted | NO
+   8 |             42 |             45 |    0.378 | accepted | NO
+   9 |             41 |             50 |    0.452 | rejected | NO
+  10 |             21 |             30 |    0.341 | accepted | NO
+  11 |             24 |             24 |    0.297 | accepted | yes
+  12 |             26 |             23 |    0.317 | accepted | NO
+  13 |             40 |             31 |    0.329 | accepted | NO
+  14 |             33 |             31 |    0.311 | accepted | NO
+  15 |             38 |             34 |    0.314 | accepted | NO
+
+Posts evaluated: 15
+Top-1 correct: 1
+TOP-1 PRECISION: 6.67%
+Of 14 accepted matches, 1 correct
+PRECISION ON ACCEPTED MATCHES: 7.14%
+Category-level precision (correct animal type, ignoring exact photo): 15/15 = 100%
+
+Image confidence table
+
+imageID | category | confidence | status
+1       | fox      | 1.00       | done
+2       | fox      | 0.95       | done
+3       | fox      | 1.00       | done
+4       | fox      | 1.00       | done
+5       | fox      | 1.00       | done
+6       | fox      | 0.95       | done
+7       | fox      | 1.00       | done
+8       | fox      | 1.00       | done
+9       | fox      | 1.00       | done
+10      | fox      | 1.00       | done
+11      | wolf     | 0.85       | done
+12      | wolf     | 0.95       | done
+13      | dog      | 0.65       | flagged
+14      | wolf     | 1.00       | done
+15      | wolf     | 0.95       | done
+16      | wolf     | 1.00       | done
+17      | wolf     | 0.95       | done
+18      | wolf     | 1.00       | done
+19      | wolf     | 1.00       | done
+20      | wolf     | 0.95       | done
+21      | bear     | 0.95       | done
+22      | bear     | 1.00       | done
+23      | bear     | 1.00       | done
+24      | bear     | 0.95       | done
+25      | bear     | 1.00       | done
+26      | bear     | 1.00       | done
+27      | bear     | 1.00       | done
+28      | bear     | 1.00       | done
+29      | bear     | 1.00       | done
+30      | bear     | 1.00       | done
+31      | deer     | 0.85       | done
+32      | deer     | 1.00       | done
+33      | deer     | 0.85       | done
+34      | deer     | 1.00       | done
+35      | deer     | 0.95       | done
+36      | deer     | 1.00       | done
+37      | deer     | 0.95       | done
+38      | deer     | 1.00       | done
+39      | deer     | 0.85       | done
+40      | deer     | 1.00       | done
+41      | dog      | 1.00       | done
+42      | dog      | 1.00       | done
+43      | dog      | 1.00       | done
+44      | dog      | 1.00       | done
+45      | dog      | 1.00       | done
+46      | dog      | 1.00       | done
+47      | dog      | 1.00       | done
+48      | dog      | 1.00       | done
+49      | dog      | 1.00       | done
+50      | dog      | 0.95       | done
+
+Finding: captions became more specific and different from each other.
+Top-1 exact photo precision dropped. Category precision stayed the same.
+
+
+------------------------------------------------------------------
+TEST RUN 3 - revised prompt, caption plus attributes
+
+Change: embed_images.py updated to embed caption text combined with
+the attributes list, instead of caption alone. Vision tagging not
+re-run, only embeddings regenerated, so confidence table is the same
+as Test 2.
+
+python -m scripts.run_guard
+
+post 1: accepted -> fox image, distance 0.225
+post 2: accepted -> fox image, distance 0.302
+post 3: accepted -> fox image, distance 0.363
+post 4: accepted -> wolf image, distance 0.374
+post 5: accepted -> wolf image, distance 0.375
+post 6: accepted -> wolf image, distance 0.329
+post 7: accepted -> dog image, distance 0.408
+post 8: accepted -> dog image, distance 0.365
+post 9: accepted -> dog image, distance 0.446
+post 10: accepted -> bear image, distance 0.342
+post 11: accepted -> bear image, distance 0.307
+post 12: accepted -> bear image, distance 0.326
+post 13: accepted -> deer image, distance 0.326
+post 14: accepted -> deer image, distance 0.326
+post 15: accepted -> deer image, distance 0.299
+
+python -m scripts.forced_wolf
+
+fox post ID: 1
+forced wolf image ID: 19
+wolf distance to fox post: 0.363 (threshold 0.45)
+RESULT: rejected
+EXPLANATION: category mismatch, expected fox but detected wolf
+
+python -m scripts.run_eval
+
+post | expected image | guard top pick | distance | decision | correct?
+   1 |              1 |              8 |    0.225 | accepted | NO
+   2 |              6 |              2 |    0.302 | accepted | NO
+   3 |              7 |              5 |    0.363 | accepted | NO
+   4 |             20 |             19 |    0.374 | accepted | NO
+   5 |             15 |             14 |    0.375 | accepted | NO
+   6 |             19 |             20 |    0.329 | accepted | NO
+   7 |             48 |             50 |    0.408 | accepted | NO
+   8 |             42 |             45 |    0.365 | accepted | NO
+   9 |             41 |             50 |    0.446 | accepted | NO
+  10 |             21 |             30 |    0.342 | accepted | NO
+  11 |             24 |             24 |    0.307 | accepted | yes
+  12 |             26 |             23 |    0.326 | accepted | NO
+  13 |             40 |             31 |    0.326 | accepted | NO
+  14 |             33 |             31 |    0.326 | accepted | NO
+  15 |             38 |             34 |    0.299 | accepted | NO
+
+Posts evaluated: 15
+Top-1 correct: 1
+TOP-1 PRECISION: 6.67%
+Of 15 accepted matches, 1 correct
+PRECISION ON ACCEPTED MATCHES: 6.67%
+Category-level precision (correct animal type, ignoring exact photo): 15/15 = 100%
+
+Image confidence table (same as Test 2, vision tagging not re-run)
+
+imageID | category | confidence | status
+1       | fox      | 1.00       | done
+2       | fox      | 0.95       | done
+3       | fox      | 1.00       | done
+4       | fox      | 1.00       | done
+5       | fox      | 1.00       | done
+6       | fox      | 0.95       | done
+7       | fox      | 1.00       | done
+8       | fox      | 1.00       | done
+9       | fox      | 1.00       | done
+10      | fox      | 1.00       | done
+11      | wolf     | 0.85       | done
+12      | wolf     | 0.95       | done
+13      | dog      | 0.65       | flagged
+14      | wolf     | 1.00       | done
+15      | wolf     | 0.95       | done
+16      | wolf     | 1.00       | done
+17      | wolf     | 0.95       | done
+18      | wolf     | 1.00       | done
+19      | wolf     | 1.00       | done
+20      | wolf     | 0.95       | done
+21      | bear     | 0.95       | done
+22      | bear     | 1.00       | done
+23      | bear     | 1.00       | done
+24      | bear     | 0.95       | done
+25      | bear     | 1.00       | done
+26      | bear     | 1.00       | done
+27      | bear     | 1.00       | done
+28      | bear     | 1.00       | done
+29      | bear     | 1.00       | done
+30      | bear     | 1.00       | done
+31      | deer     | 0.85       | done
+32      | deer     | 1.00       | done
+33      | deer     | 0.85       | done
+34      | deer     | 1.00       | done
+35      | deer     | 0.95       | done
+36      | deer     | 1.00       | done
+37      | deer     | 0.95       | done
+38      | deer     | 1.00       | done
+39      | deer     | 0.85       | done
+40      | deer     | 1.00       | done
+41      | dog      | 1.00       | done
+42      | dog      | 1.00       | done
+43      | dog      | 1.00       | done
+44      | dog      | 1.00       | done
+45      | dog      | 1.00       | done
+46      | dog      | 1.00       | done
+47      | dog      | 1.00       | done
+48      | dog      | 1.00       | done
+49      | dog      | 1.00       | done
+50      | dog      | 0.95       | done
+
+Finding: no change in top-1 precision compared to Test 2. Post 9 moved
+from rejected to accepted, distance changed from 0.452 to 0.446, just
+under the threshold. Decision: reverted embed_images.py back to
+caption-only, matching Test 2 state.
+
+
+------------------------------------------------------------------
+FINAL STATE LOCKED: Test 2 (revised prompt, caption only embeddings)

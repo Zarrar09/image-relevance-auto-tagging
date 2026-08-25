@@ -25,11 +25,25 @@ Use this rubric to set your confidence score:
   be confused with a different category in the list
 - below 0.5: cannot confidently identify the subject at all
 
+When writing the caption and attributes, focus on what makes THIS specific
+photo different from other photos of the same animal: the exact setting
+(paved path, dry straw, rocky field, riverbank...), what the animal is
+doing (resting, running, interacting with another animal, eating...), any
+other animals or objects in frame, distinctive markings or fur pattern,
+lighting or time of day, and camera angle or distance. Avoid generic stock
+phrases like "looking directly at the camera" or "standing alert" unless
+that genuinely is the most distinctive thing in the photo. Two photos of
+the same species should read as noticeably different captions if their
+settings or actions differ.
+
 Respond with:
 - subject: a short natural description (e.g. "a red fox")
 - category: exactly one of: fox, wolf, bear, deer, dog (lowercase, no other value)
-- attributes: a list of 3-5 visible features (color, setting, pose)
-- caption: one sentence describing the image
+- attributes: a list of 3-5 visible features, prioritizing what's unique to
+  this photo over generic species traits (e.g. prefer "crossing a wooden
+  bridge" over "pointed ears")
+- caption: one sentence describing the image, written to distinguish it
+  from other photos of the same animal
 - confidence: your confidence score, following the rubric above exactly
 """
 
