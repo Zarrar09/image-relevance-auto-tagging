@@ -27,7 +27,7 @@ def evaluate_gates(expected_category, image_row):
     return result, explanation
 
 
-async def find_match_for_post(conn, post_id):
+async def rank_images_for_post(conn, post_id, limit):
     post = await conn.fetchrow(
         "SELECT postID, expectedCategory, embedding "
         "FROM Posts "
@@ -35,16 +35,27 @@ async def find_match_for_post(conn, post_id):
         post_id
     )
 
-    top_image = await conn.fetchrow(
-        "SELECT imageID, category, caption, confidence, "
+    if post is None:
+        return None, None
+
+    ranked_images = await conn.fetch(
+        "SELECT imageID, category, caption, confidence, filePath, "
         "embedding <=> $1 AS distance "
         "FROM Images "
         "WHERE embedding IS NOT NULL "
         "ORDER BY distance ASC "
-        "LIMIT 1",
-        post["embedding"]
+        "LIMIT $2",
+        post["embedding"],
+        limit
     )
 
+    return post, ranked_images
+
+
+async def find_match_for_post(conn, post_id):
+    post, ranked_images = await rank_images_for_post(conn, post_id, 1)
+
+    top_image = ranked_images[0]
     distance = top_image["distance"]
     result, explanation = evaluate_gates(post["expectedcategory"], top_image)
     return top_image, distance, result, explanation
