@@ -1,0 +1,30 @@
+TEST RUN 1:
+
+post | expected image | guard top pick | distance | decision | correct?
+------------------------------------------------------------------------------
+   1 |              1 |              7 |    0.275 | accepted | NO
+   2 |              6 |              6 |    0.296 | accepted | yes
+   3 |              7 |              6 |    0.367 | accepted | NO
+   4 |             20 |             14 |    0.372 | accepted | NO
+   5 |             15 |             16 |    0.360 | accepted | NO
+   6 |             19 |             16 |    0.322 | accepted | NO
+   7 |             48 |             13 |    0.410 | rejected | NO
+   8 |             42 |             47 |    0.370 | accepted | NO
+   9 |             41 |             13 |    0.439 | rejected | NO
+  10 |             21 |             21 |    0.347 | accepted | yes
+  11 |             24 |             24 |    0.293 | accepted | yes
+  12 |             26 |             28 |    0.304 | accepted | NO
+  13 |             40 |             31 |    0.339 | accepted | NO
+  14 |             33 |             38 |    0.360 | accepted | NO
+  15 |             38 |             38 |    0.325 | accepted | yes
+
+Posts evaluated: 15
+Top-1 correct: 4
+TOP-1 PRECISION: 26.67%
+
+Of the 13 matches the guard accepted, 4 were correct.
+PRECISION ON ACCEPTED MATCHES: 30.77%
+
+------------------------------------------------------------------
+TEST RUN 2:
+
