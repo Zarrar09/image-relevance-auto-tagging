@@ -1,12 +1,33 @@
-from src.database import get_connection
-from src.embeddings import embed_text, turn_list_into_vector_string
-
 SIMILARITY_THRESHOLD = 0.45
 CONFIDENCE_THRESHOLD = 0.75
 
 
+def evaluate_gates(expected_category, image_row):
+    distance = image_row["distance"]
+    category = image_row["category"]
+    confidence = image_row["confidence"]
+
+    if distance > SIMILARITY_THRESHOLD:
+        result = "rejected"
+        explanation = f"no confident match, closest image distance {distance:.3f} is above threshold {SIMILARITY_THRESHOLD}"
+        return result, explanation
+
+    if category != expected_category:
+        result = "rejected"
+        explanation = f"category mismatch, expected {expected_category} but detected {category}"
+        return result, explanation
+
+    if confidence < CONFIDENCE_THRESHOLD:
+        result = "rejected"
+        explanation = f"low confidence, image tag confidence {confidence} is below threshold {CONFIDENCE_THRESHOLD}"
+        return result, explanation
+
+    result = "accepted"
+    explanation = f"confident match, {category} image matches expected category with distance {distance:.3f}"
+    return result, explanation
+
+
 async def find_match_for_post(conn, post_id):
-    # get the post's expected category and its embedding
     post = await conn.fetchrow(
         "SELECT postID, expectedCategory, embedding "
         "FROM Posts "
@@ -14,7 +35,6 @@ async def find_match_for_post(conn, post_id):
         post_id
     )
 
-    # find the closest image to this post
     top_image = await conn.fetchrow(
         "SELECT imageID, category, caption, confidence, "
         "embedding <=> $1 AS distance "
@@ -26,33 +46,33 @@ async def find_match_for_post(conn, post_id):
     )
 
     distance = top_image["distance"]
-
-    # too far away to be a real match
-    if distance > SIMILARITY_THRESHOLD:
-        result = "rejected"
-        explanation = f"no confident match, closest image distance {distance:.3f} is above threshold {SIMILARITY_THRESHOLD}"
-        return top_image, distance, result, explanation
-
-    # similar image but wrong animal
-    if top_image["category"] != post["expectedcategory"]:
-        result = "rejected"
-        explanation = f"category mismatch, expected {post['expectedcategory']} but detected {top_image['category']}"
-        return top_image, distance, result, explanation
-
-    # the image tag itself was not reliable
-    if top_image["confidence"] < CONFIDENCE_THRESHOLD:
-        result = "rejected"
-        explanation = f"low confidence, image tag confidence {top_image['confidence']} is below threshold {CONFIDENCE_THRESHOLD}"
-        return top_image, distance, result, explanation
-
-    # passed all checks
-    result = "accepted"
-    explanation = f"confident match, {top_image['category']} image matches expected category with distance {distance:.3f}"
+    result, explanation = evaluate_gates(post["expectedcategory"], top_image)
     return top_image, distance, result, explanation
 
 
+async def find_match_for_forced_image(conn, post_id, image_id):
+    post = await conn.fetchrow(
+        "SELECT postID, expectedCategory, embedding "
+        "FROM Posts "
+        "WHERE postID = $1",
+        post_id
+    )
+
+    forced_image = await conn.fetchrow(
+        "SELECT imageID, category, caption, confidence, "
+        "embedding <=> $1 AS distance "
+        "FROM Images "
+        "WHERE imageID = $2",
+        post["embedding"],
+        image_id
+    )
+
+    distance = forced_image["distance"]
+    result, explanation = evaluate_gates(post["expectedcategory"], forced_image)
+    return forced_image, distance, result, explanation
+
+
 async def save_match(conn, post_id, image_id, distance, result, explanation):
-    # store the guard's decision so it can be reviewed later
     await conn.execute(
         "INSERT INTO Matches (postID, imageID, calculatedSimilarity, result, explanation, reviewStatus) "
         "VALUES ($1, $2, $3, $4, $5, $6) "

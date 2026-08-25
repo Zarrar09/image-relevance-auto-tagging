@@ -49,3 +49,12 @@ CREATE TABLE api_calls (
     totalTokens INT NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE INDEX IF NOT EXISTS idx_images_status ON Images(status);
+CREATE INDEX IF NOT EXISTS idx_images_category ON Images(category);
+CREATE INDEX IF NOT EXISTS idx_posts_expectedcategory ON Posts(expectedCategory);
+CREATE INDEX IF NOT EXISTS idx_matches_reviewstatus ON Matches(reviewStatus);
+CREATE INDEX IF NOT EXISTS idx_api_calls_purpose ON api_calls(purpose);
+
+ALTER TABLE api_calls ALTER COLUMN imageID DROP NOT NULL;
+ALTER TABLE api_calls ADD COLUMN IF NOT EXISTS postID INTEGER REFERENCES Posts(postID);
