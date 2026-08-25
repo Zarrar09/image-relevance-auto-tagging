@@ -1,0 +1,20 @@
+name: image-relevance-auto-tagging
+description: AI image understanding and content matching engine with a mismatch guard
+
+# seed is intended to run once against a fresh database. Running it a
+# second time will insert duplicate rows into Images and Posts, since
+# those tables do not have ON CONFLICT protection (unlike Matches).
+
+run: docker compose up -d db && uvicorn src.main:app --host 0.0.0.0 --port 8000
+seed: python -m scripts.store_images_db && python -m scripts.store_posts && python -m scripts.find_pending_images && python -m scripts.embed_images && python -m scripts.embed_posts && python -m scripts.run_guard
+test: pytest tests/ -v
+
+base_url: http://localhost:8000
+
+endpoints:
+  - GET /health
+  - GET /posts/{post_id}/images
+  - POST /posts/{post_id}/match
+  - GET /matches
+  - GET /matches/{post_id}/{image_id}
+  - POST /matches/{post_id}/{image_id}/review
