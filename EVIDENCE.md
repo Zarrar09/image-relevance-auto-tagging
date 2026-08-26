@@ -96,7 +96,7 @@ GET /posts/1/images?limit=5
 
 **Command:**
 ```
-python -m scripts.probe_semantic_match
+python -m scripts.semantic_test
 ```
 **Query used:** "Vulpes vulpes, the scientific name for a common wild canid found across the northern hemisphere." This sentence shares no words with any fox caption in the database.
 
