@@ -1,6 +1,6 @@
-## Images
-
 This is the design of the database before implementing it, to reduce the number of issues and have it properly planned out.
+
+## Images
 
 Schema for images:
 
@@ -12,9 +12,9 @@ Schema for images:
 - caption: VARCHAR
 - confidence: DECIMAL
 - embedding: VECTOR(N)
-- status: VARCHAR (pending/processing/done/failed)
+- status: VARCHAR (pending/processing/done/failed/flagged)
 - createdAt: TIMESTAMP
-- index: status
+- index: status, category
 
 ## Posts
 
@@ -22,13 +22,13 @@ Schema for posts:
 
 - postID: integer, and is going to be the primary key for the posts
 - postContent: VARCHAR, the actual information regarding the post
-- expectedSubject: VARCHAR, What the model expects to see in the images subject
-- expectedCategory: VARCHAR, What the model expects to see in the images category
+- expectedCategory: VARCHAR, what the model expects to see in the image's category
 - embedding: VECTOR(N)
 - status: VARCHAR, pending, processing, done, failed
 - createdAt: TIMESTAMP
+- index: expectedCategory
 
-## Mathces
+## Matches
 
 Since both have a relationship of M:N therefore, we have to create a schema for matches.
 
@@ -42,4 +42,26 @@ Schema for matches:
 - explanation: TEXT
 - reviewStatus: VARCHAR (pending/approved/rejected)
 - createdAt: TIMESTAMP
-- index: postID, imageID
+- index: postID, reviewStatus
+
+## API Calls
+
+Added during Phase 2 to track cost per AI call, one row per vision or embedding call made.
+
+Schema for api_calls:
+
+- callID: INT, primary key
+- imageID: INT, FK -> images (nullable, since post embedding calls have no image)
+- postID: INT, FK -> posts (nullable, since image calls have no post)
+- purpose: VARCHAR (vision_tagging/embedding)
+- inputTokens: INT
+- outputTokens: INT
+- totalTokens: INT
+- createdAt: TIMESTAMP
+- index: purpose
+
+## Changes from the original design
+
+- expectedSubject on Posts was removed. expectedCategory was enough for the guard category check.
+- flagged was added to the status values of pending/processing/done/failed. 
+- api_calls was added as a fourth table, not in the original three-table plan. Cost tracking per call was a requirement from the start, but it needed its own table rather than every image having its own section of billing, as an image can create a bill more than once.
