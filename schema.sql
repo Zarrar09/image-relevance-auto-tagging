@@ -16,7 +16,6 @@ CREATE TABLE images (
 CREATE TABLE posts (
     postID SERIAL PRIMARY KEY,
     postContent TEXT NOT NULL,
-    expectedSubject VARCHAR(255),
     expectedCategory VARCHAR(255),
     embedding VECTOR(768),
     status VARCHAR(100) NOT NULL,
@@ -36,9 +35,6 @@ CREATE TABLE matches (
     FOREIGN KEY (postID) REFERENCES posts(postID)
 );
 
-CREATE INDEX idx_images_status ON images (status);
-CREATE INDEX idx_matches_postID ON matches (postID);
-
 CREATE TABLE api_calls (
     callID SERIAL PRIMARY KEY,
     imageID INT REFERENCES Images(imageID),
@@ -53,8 +49,6 @@ CREATE TABLE api_calls (
 CREATE INDEX IF NOT EXISTS idx_images_status ON Images(status);
 CREATE INDEX IF NOT EXISTS idx_images_category ON Images(category);
 CREATE INDEX IF NOT EXISTS idx_posts_expectedcategory ON Posts(expectedCategory);
+CREATE INDEX IF NOT EXISTS idx_matches_postid ON Matches(postID);
 CREATE INDEX IF NOT EXISTS idx_matches_reviewstatus ON Matches(reviewStatus);
 CREATE INDEX IF NOT EXISTS idx_api_calls_purpose ON api_calls(purpose);
-
-ALTER TABLE api_calls ALTER COLUMN imageID DROP NOT NULL;
-ALTER TABLE api_calls ADD COLUMN IF NOT EXISTS postID INTEGER REFERENCES Posts(postID);

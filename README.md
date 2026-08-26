@@ -6,6 +6,17 @@ A post about red foxes should get a red fox photo. A wolf photo that looks kind 
 
 That refusal part is really the whole point of this project. Anyone can build something that always returns an answer. Building something that knows when to say "I'm not confident enough to answer" is the harder and more useful skill, and that is what most of this project is actually about.
 
+## Where to find things
+
+This repo has a few other markdown files besides this one. Here is what each one is for and when you would actually want to open it, so you're not left guessing which file has what you're looking for.
+
+- **[DESIGN.md](DESIGN.md)**, the database schema as I planned it out before writing any code, plus a short section at the end listing what I actually changed once I started building and realized a couple of things in the plan were wrong or not needed.
+- **[EVIDENCE.md](EVIDENCE.md)**, the actual proof. Every requirement in the project brief and every acceptance probe has a real command, a real result, and a screenshot next to it here. If you want receipts instead of just claims, this is the file.
+- **[BUILDLOG.md](BUILDLOG.md)**, an honest log of where AI helped while I was building this, where it got something wrong or gave me a bad idea I didn't use, and what I actually decided or caught myself.
+- **[capstone.yaml](capstone.yaml)**, the short manifest with the exact commands to run, seed, and test this project, plus the list of API endpoints. 
+
+This README is the one to read first for an overview of what the system does and how to run it. The others are there once you want to go deeper or check that a specific claim is actually true.
+
 ## What it does, in plain terms
 
 1. It looks at every image with an AI vision model and writes down what it sees: the subject, the category (fox, wolf, dog, bear, or deer), some attributes, a caption, and how confident it is.
@@ -202,7 +213,7 @@ Only if all three pass does the guard accept the match. Every single decision, a
 
 I measured this two different ways, and the two numbers tell different stories, so I'm reporting both instead of picking the one that looks better.
 
-**Exact photo precision: 1 out of 15 posts (about 7 percent).** This measures whether the system's top pick was the exact same photo I personally would have picked for that post.
+**Exact photo precision: 1 out of 15 posts (6.67 percent).** This measures whether the system's top pick was the exact same photo I personally would have picked for that post.
 
 **Category precision: 15 out of 15 posts (100 percent).** This measures whether the system's top pick was at least the correct animal.
 
